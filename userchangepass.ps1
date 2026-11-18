@@ -31,19 +31,23 @@ Function RunAsAdministrator()
 #Run as Admin
 RunAsAdministrator
 
+function ChangePassword {
+    try {
+        $changePassword = Read-Host -Prompt "Please input a passowrd
+    Make sure to have 12 minimum character with small and big letter,
+    numbers and special characters" -AsSecureString
+        Set-LocalUser -Name $env:USERNAME -Password $changePassword
+        Write-Output "Password Updated! After successuly run the command it will permantly delete the file"
+        Start-Sleep -Seconds 4
+        Remove-Item $script:MyInvocation.MyCommand.Path -Force
+    }
+    catch {
+        Write-Output "You input a wrong password context"
+    }    
 
-try {
-    $changePassword = Read-Host -Prompt "Please input a passowrd
-Make sure to have 12 minimum character with small and big letter,
-numbers and special characters" -AsSecureString
-    Set-LocalUser -Name $env:USERNAME -Password $changePassword
-    Write-Output "Password Updated! After successuly run the command it will permantly delete the file"
-    Start-Sleep -Seconds 4
-    Remove-Item $script:MyInvocation.MyCommand.Path -Force
-}
-catch {
-    Write-Output "You input a wrong password context"
 }
 
+//Call the Function ChangePassword
+ChangePassword
 
 
