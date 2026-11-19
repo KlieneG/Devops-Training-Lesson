@@ -1,6 +1,6 @@
 
 BeforeAll {
-    . "$PSScriptRoot/ChangePassword.ps1"
+    . "$PSScriptRoot/userchangepass.ps1"
 }
 
 Describe "ChangePassword Function Tests" {
