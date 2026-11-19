@@ -28,8 +28,6 @@ Function RunAsAdministrator()
     }
 }
 
-#Run as Admin
-RunAsAdministrator
 
 
 function ChangePassword {
