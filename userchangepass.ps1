@@ -51,7 +51,5 @@ function ChangePassword {
     }
 }
 
-//Call the Function ChangePassword
-ChangePassword
 
 
