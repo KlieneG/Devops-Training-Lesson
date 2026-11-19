@@ -1,17 +1,34 @@
-name: Test PowerShell on Ubuntu
-on: push
+name: PowerShell Pester Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
-  pester-test:
-    name: Pester test
-    runs-on: ubuntu-latest
+  pester-tests:
+    runs-on: windows-latest
+
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v6
-      - name: Perform a Pester test from the command-line
-        shell: pwsh
-        run: Test-Path resultsfile.log | Should -Be $true
-      - name: Perform a Pester test from the Tests.ps1 file
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Pester
         shell: pwsh
         run: |
-          Invoke-Pester Unit.Tests.ps1 -Passthru
+          Install-Module Pester -RequiredVersion 6.2.0 -Scope CurrentUser -Force -SkipPublisherCheck
+          Import-Module Pester -RequiredVersion 6.2.0
+          Get-Module Pester
+
+      - name: Run Pester Tests
+        shell: pwsh
+        run: |
+          $config = New-PesterConfiguration
+          $config.Run.Path = "./Test.ps1"
+          $config.Run.Exit = $true
+          $config.Output.Verbosity = "Detailed"
+          Invoke-Pester -Configuration $config
