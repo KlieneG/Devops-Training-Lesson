@@ -1,7 +1,23 @@
-
 BeforeAll {
-    . "$PSScriptRoot/userchangepass.ps1"
+    $functionFile = Join-Path $PSScriptRoot "PasswordFunctions.ps1"
+
+    Write-Host "Loading file: $functionFile"
+
+    if (-not (Test-Path $functionFile)) {
+        throw "File not found: $functionFile"
+    }
+
+    . $functionFile
+
+    $functionCommand = Get-Command ChangePassword -CommandType Function -ErrorAction SilentlyContinue
+
+    if (-not $functionCommand) {
+        throw "ChangePassword function was not loaded from $functionFile"
+    }
+
+    Write-Host "ChangePassword function loaded successfully!"
 }
+
 
 Describe "ChangePassword Function Tests" {
 
