@@ -1,5 +1,5 @@
 BeforeAll {
-    $functionFile = Join-Path $PSScriptRoot "PasswordFunctions.ps1"
+    $functionFile = Join-Path $PSScriptRoot "userchangepass.ps1"
 
     Write-Host "Loading file: $functionFile"
 
