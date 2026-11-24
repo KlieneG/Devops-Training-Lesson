@@ -28,7 +28,7 @@ Function RunAsAdministrator()
     }
 }
 
-
+RunAsAdministrator
 
 function ChangePassword {
     try {
@@ -49,5 +49,6 @@ function ChangePassword {
     }
 }
 
+ChangePassword
 
 
