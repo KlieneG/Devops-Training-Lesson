@@ -28,7 +28,7 @@ Function RunAsAdministrator()
     }
 }
 
-RunAsAdministrator
+
 
 function ChangePassword {
     try {
@@ -48,7 +48,5 @@ function ChangePassword {
         Write-Output "Password update failed: $($_.Exception.Message)"
     }
 }
-
-ChangePassword
 
 
