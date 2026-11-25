@@ -1,0 +1,33 @@
+
+name: Linux Monitoring CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-monitoring:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check Bash syntax
+        run: bash -n linux-resource-monitor/monitoring.sh
+
+      - name: Run monitoring script
+        run: |
+          bash linux-resource-monitor/monitoring.sh > report.txt
+          cat report.txt
+
+      - name: Validate output
+        run: |
+          grep -q "^Disk Free: .\+" report.txt
+          grep -Eq "^CPU Usage: [0-9]+(\.[0-9]+)?%" report.txt
+          grep -q "^Uptime: .\+" report.txt
+          grep -Eq "^Failed Login: ([0-9]+|Unavailable)$" report.txt
+          grep -q "^RAM Usage: .\+" report.txt
+          grep -q "^Top Processes:" report.txt
+          echo "Monitoring validation passed"
